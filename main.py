@@ -11,14 +11,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# CONFIGURACIÓN DE CORS RECOMENDADA PARA PRODUCCIÓN EN RENDER
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://core-ripley-front-end.vercel.app"],  # React Vite frontend
+    allow_origins=["*"],  # Cambiado a "*" para permitir todas las conexiones de Vercel sin bloqueos
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Inclusión de Routers (Tus prefijos y etiquetas están perfectos)
 app.include_router(rtr_auth.router,      prefix="/auth",      tags=["Auth"])
 app.include_router(rtr_scoring.router,   prefix="/scoring",   tags=["Scoring"])
 app.include_router(rtr_creditos.router,  prefix="/creditos",  tags=["Créditos"])
@@ -31,6 +33,3 @@ app.include_router(rtr_recuperaciones.router, prefix="/recuperaciones", tags=["R
 @app.get("/")
 def root():
     return {"sistema": "Core Financiero Banco Ripley", "version": "1.0.0", "status": "ok"}
-
-
-
