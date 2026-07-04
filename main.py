@@ -11,13 +11,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CONFIGURACIÓN DE CORS RECOMENDADA PARA PRODUCCIÓN EN RENDER
+# CONFIGURACIÓN DE CORS RESTRINGIDA Y SEGURA
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Cambiado a "*" para permitir todas las conexiones de Vercel sin bloqueos
+    allow_origins=[
+        "http://localhost:5173",                 # Para que puedas seguir probando en tu computadora
+        "https://core-fromd.vercel.app"          # Tu link oficial de Vercel en producción
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],                         # Permite GET, POST, PUT, DELETE, etc.
+    allow_headers=["*"],                         # Permite todos los headers necesarios (como los tokens)
 )
 
 # Inclusión de Routers (Tus prefijos y etiquetas están perfectos)
